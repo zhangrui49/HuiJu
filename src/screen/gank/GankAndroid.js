@@ -6,8 +6,9 @@ import { View, Text, StyleSheet } from 'react-native';
 class Android extends Component {
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} onPress={() => this.props.navigation.navigate('DrawerOpen')}>
                 <Text>Android Screen</Text>
+                
             </View>
         );
     }

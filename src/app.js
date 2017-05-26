@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {AppRegistry} from 'react-native';
-import {SimpleApp} from './screen/'
+import Gank from './screen/gank/Gank'
+import Mine from './screen/MinePage'
 
-
-AppRegistry.registerComponent('HuiJu', () => SimpleApp);
+AppRegistry.registerComponent('HuiJu', () => Gank);
