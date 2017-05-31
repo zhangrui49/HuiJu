@@ -10,9 +10,9 @@ import Gank from './gank/Gank'
 import Zhihu from './Zhihu'
 
 const Drawer = DrawerNavigator({
-    // Gank: {
-    //     screen: Gank
-    // },
+    Gank: {
+        screen: Gank
+    },
     Aipai: {
         screen: Aipai
     },

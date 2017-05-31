@@ -1,6 +1,8 @@
 //import liraries
 'use strict';
 import React, {Component} from "react";
+import {StackNavigator} from 'react-navigation';
+import HJWebView from '../HJWebView'
 import {
     ActivityIndicator,
     Animated,
@@ -10,15 +12,16 @@ import {
     Text,
     View,
     Image,
-    Dimensions
+    Dimensions,
+    TouchableOpacity
 } from "react-native";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const url = "http://gank.io/api/data/福利/10/page";
+const url = "http://gank.io/api/data/Android/20/page";
 const {width, height} = Dimensions.get("window")
-class Meizi extends Component {
+class GankTab extends Component {
     static navigationOptions = {
-        title: 'Meizi'
+        title: 'GankTab'
     }
 
     constructor(props) {
@@ -26,14 +29,18 @@ class Meizi extends Component {
         this.state = {
             isLoading: true,
             error: false,
-            page:1,
+            page: 1,
             errorInfo: "",
-            dataArray: [],
+            dataArray: []
         }
     }
 
     getData() {
-        let tempUrl = url.replace('page', this.state.page);
+
+        let tempUrl = this
+            .props
+            .url
+            .replace('page', this.state.page);
         this.state.isLoading = true;
         console.log(tempUrl);
         fetch(tempUrl).then((response) => response.json()).then((responseData) => {
@@ -44,19 +51,17 @@ class Meizi extends Component {
                 dataBlob.push({key: i, value: item})
                 i++;
             });
-            if(this.state.page===1){
-                     this.setState((state) => ({
-                dataArray: dataBlob,
-            }));
-            }else{
-            this.setState((state) => ({
-                dataArray: [...this.state.dataArray, ...dataBlob],
-            }));
+            if (this.state.page === 1) {
+                this.setState((state) => ({dataArray: dataBlob}));
+            } else {
+                this.setState((state) => ({
+                    dataArray: [
+                        ...this.state.dataArray,
+                        ...dataBlob
+                    ]
+                }));
             }
-            
-            this.setState((state) => ({
-                isLoading: false
-            }));
+            this.setState((state) => ({isLoading: false}));
             data = null;
             dataBlob = null;
         }).catch((error) => {
@@ -68,14 +73,14 @@ class Meizi extends Component {
 
     onEndReached = () => {
         console.log("onEndReached");
-        this.state.page=this.state.page+1;
+        this.state.page = this.state.page + 1;
         this.getData();
     };
 
     onRefresh = () => {
         console.log("onRefresh");
         this.state.page = 1;
-        this.state.dataArray=[];
+        this.state.dataArray = [];
         this.getData();
     }
     componentDidMount() {
@@ -92,27 +97,60 @@ class Meizi extends Component {
         );
     }
 
-    renderItem({item}) {
-        return (<Image
-            source={{
-            uri: item.value.url
-        }}
+    renderSeparator = () => {
+        return (<View
             style={{
-            height: 300,
-            width: width
+            height: 1,
+            width: width,
+            backgroundColor: "#CED0CE"
         }}/>);
+    };
 
+    renderItem({item}) {
+        return (
+            <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
+                <View
+                    style={{
+                    backgroundColor: 'white',
+                    width: width,
+                    justifyContent: 'center',
+                    marginLeft: 10,
+                    flexDirection: 'column'
+                }}>
+
+                    <Text
+                        style={{
+                        fontSize: 16,
+                        color: 'green',
+                        justifyContent: 'center',
+                        height: 40
+                    }}>{item.value.desc}</Text>
+
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
+    _navigate = (uri) => {
+        const {navigate} = this.props.navigation;
+        navigate("WebView", {url: uri})
     }
     renderData() {
         console.log(this.state.dataArray);
         return (<AnimatedFlatList
             data={this.state.dataArray}
-            renderItem={this.renderItem}
+            renderItem={this
+            .renderItem
+            .bind(this)}
             onEndReached={this.onEndReached}
             refreshing={this.state.isLoading}
             onRefresh={this.onRefresh}
             keyExtractor={item => item.value.url}
-            onEndReachedThreshold={0.1}/>);
+            ItemSeparatorComponent={this.renderSeparator}
+            onEndReachedThreshold={0.1}
+            style={{
+            backgroundColor: 'white'
+        }}/>);
     }
     //加载等待的view
     renderLoadingView() {
@@ -131,7 +169,7 @@ class Meizi extends Component {
     }
 
 }
-export default Meizi;
+export default GankTab;
 
 const styles = StyleSheet.create({
     container: {
