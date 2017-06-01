@@ -1,4 +1,8 @@
+/**
+ * Created by zhangrui on 2017/6/1.
+ */
 import React, {Component} from "react";
+import { NavigationActions} from 'react-navigation';
 import {
     Animated,
     FlatList,
@@ -6,16 +10,13 @@ import {
     Text,
     View,
     Dimensions,
-    Image,
-    TouchableHighlight,
-    Alert
+    TouchableOpacity
 } from "react-native";
-import CachedImage from "react-native-img-cache";
-import RNFetchBlob from "react-native-fetch-blob";
+
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const url = "http://gank.io/api/data/福利/10/page";
+const url = "http://gank.io/api/data/iOS/20/page";
 const {width, height} = Dimensions.get("window")
-class Meizi extends Component {
+class GankIos extends Component {
     static navigationOptions = {
         drawerLabel: '豆瓣',
         drawerIcon:({tintColor}) => (
@@ -23,6 +24,7 @@ class Meizi extends Component {
                 source={require('../../image/gank.png')} style={{width:20,height:20}}/>
         ),
     };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -30,11 +32,12 @@ class Meizi extends Component {
             error: false,
             page: 1,
             errorInfo: "",
-            dataArray: [],
+            dataArray: []
         }
     }
 
     getData() {
+
         let tempUrl = url.replace('page', this.state.page);
         this.state.isLoading = true;
         console.log(tempUrl);
@@ -47,18 +50,16 @@ class Meizi extends Component {
                 i++;
             });
             if (this.state.page === 1) {
-                this.setState((state) => ({
-                    dataArray: dataBlob,
-                }));
+                this.setState((state) => ({dataArray: dataBlob}));
             } else {
                 this.setState((state) => ({
-                    dataArray: [...this.state.dataArray, ...dataBlob],
+                    dataArray: [
+                        ...this.state.dataArray,
+                        ...dataBlob
+                    ]
                 }));
             }
-
-            this.setState((state) => ({
-                isLoading: false
-            }));
+            this.setState((state) => ({isLoading: false}));
             data = null;
             dataBlob = null;
         }).catch((error) => {
@@ -79,8 +80,7 @@ class Meizi extends Component {
         this.state.page = 1;
         this.state.dataArray = [];
         this.getData();
-    }
-
+    };
     componentDidMount() {
         this.getData();
     }
@@ -93,68 +93,79 @@ class Meizi extends Component {
                 </Text>
             </View>
         );
-    }
+    };
+
+    renderSeparator = () => {
+        return (<View
+            style={{
+                height: 1,
+                width: width,
+                backgroundColor: "#CED0CE"
+            }}/>);
+    };
 
     renderItem({item}) {
         return (
-            <TouchableHighlight onPress={() => this.saveImg(item)} onMoveShouldSetResponder={true}>
-                <Image
-                    source={{
-                        uri: item.value.url
-                    }}
+            <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
+                <View
                     style={{
-                        height: 300,
-                        width: width
-                    }}/>
-            </TouchableHighlight>);
+                        backgroundColor: 'white',
+                        width: width,
+                        justifyContent: 'center',
+                        marginLeft: 10,
+                        flexDirection: 'column'
+                    }}>
+
+                    <Text
+                        style={{
+                            fontSize: 16,
+                            color: 'green',
+                            justifyContent: 'center',
+                            height: 40
+                        }}>{item.value.desc}</Text>
+
+                </View>
+            </TouchableOpacity>
+        );
     }
 
-    saveImg(item) {
-        Alert.alert("保存图片","确定保存该图片?",[
-                {text: '确定', onPress: () => this.download(item)},
-                {text: '取消', onPress: () => this.dismiss(), style: 'cancel'},
-            ],
-            { cancelable: false });
+    _navigate = (uri) => {
+
+        const navigateAction = NavigationActions.navigate({
+
+            routeName: 'WebView',
+
+            params: {url: uri},
+
+            action: NavigationActions.navigate({routeName: 'WebView'})
+        });
+
+        this
+            .props
+            .navigation
+            .dispatch(navigateAction);
     };
-
-    dismiss(){
-        console.log("dismiss")
-    }
-    download(item){
-        let dirs = RNFetchBlob.fs.dirs;
-        RNFetchBlob
-            .config({
-                path: dirs.DCIMDir + '/huiju/' + this.getFileName(item.value.url),
-                fileCache: true,
-            })
-            .fetch('GET', item.value.url, {})
-            .then((res) => {
-                console.log('The file saved to ', res.path())
-            })
-    }
-    getFileName(o) {
-        let pos = o.lastIndexOf("/");
-        return o.substring(pos + 1);
-    }
-
     renderData() {
         console.log(this.state.dataArray);
         return (<AnimatedFlatList
             data={this.state.dataArray}
-            renderItem={this.renderItem.bind(this)}
+            renderItem={this
+                .renderItem
+                .bind(this)}
             onEndReached={this.onEndReached}
             refreshing={this.state.isLoading}
             onRefresh={this.onRefresh}
             keyExtractor={item => item.value.url}
-            onEndReachedThreshold={0.1}/>);
+            ItemSeparatorComponent={this.renderSeparator}
+            onEndReachedThreshold={0.1}
+            style={{
+                backgroundColor: 'white'
+            }}/>);
     }
-
-    //加载等待的view
     renderLoadingView() {
         this.state.isLoading = true;
         this.renderData();
     }
-
     render() {
         if (this.state.isLoading && !this.state.error) {
             return this.renderData();
@@ -167,7 +178,7 @@ class Meizi extends Component {
     }
 
 }
-export default Meizi;
+export default GankIos;
 
 const styles = StyleSheet.create({
     container: {

@@ -17,7 +17,7 @@ class Gank extends Component {
         super(props);
     }
 
-    render() {
+    render() { // 此方法的tab里,不能navigate
         return (<GankNavi
             style={{
             flex: 1

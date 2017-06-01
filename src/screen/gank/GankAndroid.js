@@ -1,17 +1,13 @@
-//import liraries
 import React, {Component} from "react";
-import {StackNavigator, NavigationActions} from 'react-navigation';
-import HJWebView from '../HJWebView'
+import {NavigationActions} from 'react-navigation';
 import {
-    ActivityIndicator,
     Animated,
     FlatList,
-    ScrollView,
     StyleSheet,
     Text,
     View,
-    Image,
     Dimensions,
+    Image,
     TouchableOpacity
 } from "react-native";
 
@@ -20,8 +16,12 @@ const url = "http://gank.io/api/data/Android/20/page";
 const {width, height} = Dimensions.get("window")
 class GankAndroid extends Component {
     static navigationOptions = {
-        title: 'GankAndroid'
-    }
+        drawerLabel: '豆瓣',
+        drawerIcon:({tintColor}) => (
+            <Image
+                source={require('../../image/gank.png')} style={{width:20,height:20}}/>
+        ),
+    };
 
     constructor(props) {
         super(props);
@@ -78,7 +78,8 @@ class GankAndroid extends Component {
         this.state.page = 1;
         this.state.dataArray = [];
         this.getData();
-    }
+    };
+
     componentDidMount() {
         this.getData();
     }
@@ -91,48 +92,34 @@ class GankAndroid extends Component {
                 </Text>
             </View>
         );
-    }
+    };
 
     renderSeparator = () => {
         return (<View
             style={{
-            height: 1,
-            width: width,
-            backgroundColor: "#CED0CE"
-        }}/>);
+                height: 1,
+                width: width,
+                backgroundColor: "#CED0CE"
+            }}/>);
     };
 
     renderItem({item}) {
         return (
             <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
-                <View
+                <Text
                     style={{
-                    backgroundColor: 'white',
-                    width: width,
-                    justifyContent: 'center',
-                    marginLeft: 10,
-                    flexDirection: 'column'
-                }}>
-
-                    <Text
-                        style={{
                         fontSize: 16,
                         color: 'green',
-                        justifyContent: 'center',
-                        height: 40
+                        height: 40,
+                        marginLeft: 10,
+                        textAlign: 'center'
                     }}>{item.value.desc}</Text>
-
-                </View>
             </TouchableOpacity>
         );
     }
 
     _navigate = (uri) => {
-        // this
-        //     .props
-        //     .navigation
-        //     .navigate('WebView', {url: uri});
-        //  this.props.navigation.goBack();
+
         const navigateAction = NavigationActions.navigate({
 
             routeName: 'WebView',
@@ -140,20 +127,21 @@ class GankAndroid extends Component {
             params: {url: uri},
 
             action: NavigationActions.navigate({routeName: 'WebView'})
-        })
+        });
 
         this
             .props
             .navigation
             .dispatch(navigateAction);
-    }
+    };
+
     renderData() {
         console.log(this.state.dataArray);
         return (<AnimatedFlatList
             data={this.state.dataArray}
             renderItem={this
-            .renderItem
-            .bind(this)}
+                .renderItem
+                .bind(this)}
             onEndReached={this.onEndReached}
             refreshing={this.state.isLoading}
             onRefresh={this.onRefresh}
@@ -161,14 +149,15 @@ class GankAndroid extends Component {
             ItemSeparatorComponent={this.renderSeparator}
             onEndReachedThreshold={0.1}
             style={{
-            backgroundColor: 'white'
-        }}/>);
+                backgroundColor: 'white'
+            }}/>);
     }
-    //加载等待的view
+
     renderLoadingView() {
         this.state.isLoading = true;
         this.renderData();
     }
+
     render() {
         if (this.state.isLoading && !this.state.error) {
             return this.renderData();

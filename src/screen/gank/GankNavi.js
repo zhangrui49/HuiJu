@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-import {View, Image, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {TabNavigator,DrawerNavigator} from 'react-navigation';
 
 import GankAndroid from './GankAndroid'
-import Ios from './Ios'
+import Ios from './GankIos'
 import Meizi from './GankMeizi'
 import Aipai from '../Aipai'
 import Douban from '../Douban'
@@ -48,9 +48,9 @@ const GankNavi = TabNavigator({
 }, {
     lazy: true,
     initialRouteName: 'Meizi',
-    tabBarPosition: 'top', //tabbar放在底部
-    swipeEnabled: false, //不能滑动切换
-    animationEnabled: true, //不要切换动画
+    tabBarPosition: 'top',
+    swipeEnabled: true,
+    animationEnabled: true,
     tabBarOptions: {
         style: {
             height: 50,
@@ -58,8 +58,8 @@ const GankNavi = TabNavigator({
             borderColor: '#DDDDDD',
             backgroundColor: '#FFFFFF'
         },
-        showLabel: true, //不显示文字
-        showIcon: false, //显示icon
+        showLabel: true,
+        showIcon: false,
         labelStyle: {
             color: "#3F51B5"
         },
@@ -86,18 +86,18 @@ const Drawer = DrawerNavigator({
 }, {
     drawerWidth: 220, // 抽屉宽
     drawerPosition: 'left', // 抽屉在左边还是右边
-    // contentComponent: CustomDrawerContentComponent,  // 自定义抽屉组件
+   // contentComponent: CustomDrawerContentComponent,  // 自定义抽屉组件
     contentOptions: {
         initialRouteName: GankNavi, // 默认页面组件
-        activeTintColor: '#008AC9', // 选中文字颜色
+        activeTintColor: '#F44336', // 选中文字颜色
         activeBackgroundColor: '#f5f5f5', // 选中背景颜色
         inactiveTintColor: '#000', // 未选中文字颜色
         inactiveBackgroundColor: '#fff', // 未选中背景颜色
         style: {
-
         }
     }
 });
+
 
 
 const styles = StyleSheet.create({

@@ -4,12 +4,16 @@
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
+		"test": "jest",
+		"android":"react-native run-android",
+		"installR": "cd android && gradlew installRelease"
 	},
 	"dependencies": {
 		"react": "16.0.0-alpha.6",
 		"react-native": "0.44.0",
-		"react-navigation": "^1.0.0-beta.11"
+		"react-navigation": "^1.0.0-beta.11",
+		"react-native-fetch-blob":"^0.10.5",
+		"react-native-img-cache":"^1.4.0"
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",

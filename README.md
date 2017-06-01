@@ -1,4 +1,4 @@
 # HuiJu
-https://github.com/zhangrui49/Combine_RN.git
+https://github.com/zhangrui49/HuiJu.git
 
 coding...

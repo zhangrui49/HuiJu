@@ -1,8 +1,6 @@
-//import liraries
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, WebView} from 'react-native';
+import {View, Image, StyleSheet, WebView} from 'react-native';
 
-// create a component
 class HJWebView extends Component {
     static navigationOptions = {
         title: 'HJWebView'
@@ -15,17 +13,24 @@ class HJWebView extends Component {
     };
 
     render() {
-      console.log(this.props.navigation.state.params.url);
+        console.log(this.props.navigation.state.params.url);
         return (<WebView
-            automaticallyAdjustContentInsets={false}
-            source={{
-            uri: this.props.navigation.state.params.url
-        }}
-            javaScriptEnabled={true}
-            decelerationRate="normal"
-            onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
-            startInLoadingState={true}
-            scalesPageToFit={this.state.scalesPageToFit}/>);
+                automaticallyAdjustContentInsets={false}
+                source={{
+                    uri: this.props.navigation.state.params.url
+                }}
+                javaScriptEnabled={true}
+                decelerationRate="normal"
+                onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                startInLoadingState={true}
+                scalesPageToFit={this.state.scalesPageToFit}
+                renderError={this.renderError}
+                />
+        );
+    }
+
+    renderError() {
+        return <Image source={require('../image/error.png')}/>
     }
 }
 
