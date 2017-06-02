@@ -13,7 +13,8 @@
 		"react-native": "0.44.0",
 		"react-navigation": "^1.0.0-beta.11",
 		"react-native-fetch-blob":"^0.10.5",
-		"react-native-img-cache":"^1.4.0"
+		"react-native-img-cache":"^1.4.0",
+		"react-native-star-rating":"^1.0.7"
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",

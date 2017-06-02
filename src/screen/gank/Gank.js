@@ -1,10 +1,10 @@
 //import liraries
 import React, {Component} from 'react';
-import {Button, Image,View, Text, StyleSheet} from 'react-native';
-import {DrawerNavigator,StackNavigator} from 'react-navigation';
+import {Button, Image, View, Text, StyleSheet} from 'react-native';
+import {DrawerNavigator, StackNavigator} from 'react-navigation';
 import GankNavi from './GankNavi'
 import Aipai from '../Aipai'
-import Douban from '../Douban'
+import Douban from '../douban/Douban'
 import Zhihu from '../zhihu/Zhihu'
 
 class Gank extends Component {
@@ -20,8 +20,8 @@ class Gank extends Component {
     render() { // 此方法的tab里,不能navigate
         return (<GankNavi
             style={{
-            flex: 1
-        }}/>);
+                flex: 1
+            }}/>);
     }
 }
 

@@ -1,14 +1,18 @@
-import React from "react";
+/**
+ * Created by zhangrui on 2017/6/2.
+ */
+import React from 'react';
 
-import {StyleSheet} from "react-native";
+import {StyleSheet, ScrollView, Image, View, Text} from 'react-native';
 
-import {TabNavigator} from "react-navigation";
+import {TabNavigator, DrawerNavigator, DrawerItems} from 'react-navigation';
 
-import GankAndroid from "./GankAndroid";
-import Ios from "./GankIos";
-import Meizi from "./GankMeizi";
+import GankAndroid from './GankAndroid'
+import Ios from './GankIos'
+import Meizi from './GankMeizi'
 
-const GankNavi = TabNavigator({
+
+const DoubanNavi = TabNavigator({
     Meizi: {
         screen: Meizi,
         navigationOptions: {
@@ -25,11 +29,6 @@ const GankNavi = TabNavigator({
         screen: Ios,
         navigationOptions: {
             tabBarLabel: 'Ios'
-            /*tabBarIcon: ({focused, tintColor}) => (<Image
-             source={focused
-             ? imgReadActive
-             : imgRead}
-             style={styles.tabImg}/>)*/
         }
     }
 }, {
@@ -58,12 +57,4 @@ const GankNavi = TabNavigator({
 });
 
 
-
-const styles = StyleSheet.create({
-    tabImg: {
-        height: 50,
-        width: 50
-    }
-});
-
-export default GankNavi;
+export default DoubanNavi;

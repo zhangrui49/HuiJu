@@ -3,6 +3,6 @@ const Colors = {
     colorPrimaryDark: "#303F9F",
     colorAccent: "#FF4081",
 
-    
+
 }
 export default Colors;

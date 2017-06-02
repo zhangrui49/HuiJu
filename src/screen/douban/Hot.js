@@ -1,5 +1,9 @@
-import React, {Component} from "react";
-import {NavigationActions} from 'react-navigation';
+/**
+ * Created by zhangrui on 2017/6/2.
+ */
+
+import React, {Component} from 'react';
+import StarRating from 'react-native-star-rating';
 import {
     Animated,
     FlatList,
@@ -10,16 +14,16 @@ import {
     Image,
     TouchableOpacity
 } from "react-native";
-
+import {NavigationActions} from 'react-navigation';
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const url = "http://gank.io/api/data/Android/20/page";
+const url = "https://api.douban.com/v2/movie/in_theaters";
 const {width, height} = Dimensions.get("window")
-class GankAndroid extends Component {
+class Hot extends Component {
     static navigationOptions = {
-        drawerLabel: '干货',
+        drawerLabel: '豆瓣',
         drawerIcon: ({tintColor}) => (
             <Image
-                source={require('../../image/gank.png')} style={{width: 20, height: 20}}/>
+                source={require('../../image/video.png')} style={{width: 20, height: 20}}/>
         ),
     };
 
@@ -35,12 +39,10 @@ class GankAndroid extends Component {
     }
 
     getData() {
-
-        let tempUrl = url.replace('page', this.state.page);
+        let tempUrl = url + "?start=" + this.state.page + "&&count=10";
         this.state.isLoading = true;
-        console.log(tempUrl);
         fetch(tempUrl).then((response) => response.json()).then((responseData) => {
-            let data = responseData.results;
+            let data = responseData.subjects;
             let dataBlob = [];
             let i = 0;
             data.map(function (item) {
@@ -69,7 +71,7 @@ class GankAndroid extends Component {
 
     onEndReached = () => {
         console.log("onEndReached");
-        this.state.page = this.state.page + 1;
+        this.state.page = this.state.page + 10;
         this.getData();
     };
 
@@ -104,18 +106,53 @@ class GankAndroid extends Component {
     };
 
     renderItem({item}) {
+        let country = this.generateString(item.value.countries);
+        let genres = this.generateString(item.value.genres);
         return (
             <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
-                <Text
-                    style={{
-                        fontSize: 16,
-                        color: 'green',
-                        height: 40,
-                        marginLeft: 10,
-                        textAlign: 'center'
-                    }}>{item.value.desc}</Text>
+                <View style={styles.item_container}>
+                    <Image
+                        source={{uri: item.value.images['large']}}
+                        style={{
+                            width: width * 0.5,
+                            height: height * 0.3
+                        }}/>
+                    <View style={styles.item_desc}>
+                        <Text style={styles.title}>{item.value.title}</Text>
+                        <Text style={styles.text}>{item.value.countries ? country : item.value.countries}</Text>
+                        <Text style={styles.text}>{genres}</Text>
+                        <Text style={styles.text}>{item.value.year}</Text>
+                        <Text style={styles.text}>{item.value.directors[0]['name']}</Text>
+                        <StarRating
+                            maxStars={10}
+                            rating={item.value.rating['average']
+                            }
+                            starColor={'red'}
+                            disabled={true}
+                            emptyStar={'ios-star-outline'}
+                            fullStar={'ios-star'}
+                            halfStar={'ios-star-half'}
+                            iconSet={'Ionicons'}
+                            starSize={20}
+                        />
+                    </View>
+                </View>
             </TouchableOpacity>
         );
+    }
+
+    generateString(array) {
+        let s = "";
+        if (array) {
+            for (let i = 0; i < array.length; i++) {
+                if (i !== array.length - 1) {
+                    s += array[i] + "/";
+                } else {
+                    s += array[i];
+                }
+            }
+        }
+        return s;
     }
 
     _navigate = (uri) => {
@@ -145,9 +182,9 @@ class GankAndroid extends Component {
             onEndReached={this.onEndReached}
             refreshing={this.state.isLoading}
             onRefresh={this.onRefresh}
-            keyExtractor={item => item.value.url}
+            keyExtractor={item => item.value.id}
             ItemSeparatorComponent={this.renderSeparator}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={0.2}
             style={{
                 backgroundColor: 'white'
             }}/>);
@@ -168,25 +205,34 @@ class GankAndroid extends Component {
         //加载数据
         return this.renderData();
     }
-
 }
-export default GankAndroid;
 
+// define your styles
 const styles = StyleSheet.create({
-    container: {
+    item_container: {
         flex: 1,
-        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF'
+        backgroundColor: '#ffffff',
+        flexDirection: 'row',
+    },
+    item_desc: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+        flexDirection: 'column',
+        marginLeft: 20
     },
     title: {
-        fontSize: 15,
-        color: 'blue'
+        color: '#aa2200',
+        fontSize: 18,
     },
-    content: {
-        fontSize: 15,
-        color: 'black'
+    text: {
+        color: '#aa2200',
+        fontSize: 14,
+        height:30
     }
 
 });
+
+//make this component available to the app
+export default Hot;

@@ -37,11 +37,11 @@ const MainScreenNavigator = TabNavigator({
             tabBarIcon: ({tintColor}) => (<Image
                 source={require('../image/loading.png')}
                 style={[
-                {
-                    tintColor: tintColor
-                },
-                styles.icon
-            ]}/>)
+                    {
+                        tintColor: tintColor
+                    },
+                    styles.icon
+                ]}/>)
         }
     },
     Certificate: {
@@ -52,11 +52,11 @@ const MainScreenNavigator = TabNavigator({
             tabBarIcon: ({tintColor}) => (<Image
                 source={require('../image/loading.png')}
                 style={[
-                {
-                    tintColor: tintColor
-                },
-                styles.icon
-            ]}/>)
+                    {
+                        tintColor: tintColor
+                    },
+                    styles.icon
+                ]}/>)
         }
     }
 }, {

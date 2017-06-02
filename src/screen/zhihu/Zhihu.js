@@ -35,7 +35,7 @@ class Zhihu extends Component {
 
     static navigationOptions = {
         drawerLabel: '知乎',
-        title:'知乎日报',
+        title: '知乎日报',
         drawerIcon: ({tintColor}) => (
             <Image
                 source={require('../../image/zhihu.png')} style={{width: 20, height: 20}}/>
@@ -170,7 +170,7 @@ class Zhihu extends Component {
             onEndReachedThreshold={0.1}
             style={{
                 backgroundColor: 'white',
-                marginTop:5
+                marginTop: 5
             }}/>);
     }
 

@@ -6,7 +6,7 @@ const SplashStyles = StyleSheet.create({
         alignItems: 'center',
         width: null,
         height: null,
-        backgroundColor:'rgba(0,0,0,0)',
+        backgroundColor: 'rgba(0,0,0,0)',
     }
 });
 export default SplashStyles;

@@ -1,4 +1,2 @@
-const Constants={
-
-}
+const Constants = {}
 export default Constants;

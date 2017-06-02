@@ -1,14 +1,14 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text,Image, StyleSheet } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, Image, StyleSheet} from 'react-native';
 
 // create a component
 class Aipai extends Component {
     static navigationOptions = {
         drawerLabel: '爱拍',
-        drawerIcon:({tintColor}) => (
+        drawerIcon: ({tintColor}) => (
             <Image
-                source={require('../image/aipai.png')} style={{width:20,height:20}}/>
+                source={require('../image/aipai.png')} style={{width: 20, height: 20}}/>
         ),
     };
 

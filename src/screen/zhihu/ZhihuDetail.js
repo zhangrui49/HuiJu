@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Image, StyleSheet, WebView} from 'react-native';
-let url='http://news-at.zhihu.com/api/4/news/id'
+let url = 'http://news-at.zhihu.com/api/4/news/id'
 class ZhihuDetail extends Component {
     static navigationOptions = {
         title: '知乎日报'
@@ -10,16 +10,18 @@ class ZhihuDetail extends Component {
         onShouldStartLoadWithRequest: false,
         loading: true,
         scalesPageToFit: true,
-        body:''
+        body: ''
     };
+
     componentDidMount() {
         this.getStory();
     }
-    getStory(){
+
+    getStory() {
         let tempUrl = url.replace('id', this.props.navigation.state.params.id);
         console.log(tempUrl);
         fetch(tempUrl).then((response) => response.json()).then((responseData) => {
-           this.state.body = responseData.body;
+            this.state.body = responseData.body;
         }).catch((error) => {
             console.log(error);
         }).done();
@@ -30,7 +32,7 @@ class ZhihuDetail extends Component {
                 automaticallyAdjustContentInsets={false}
                 source={{
                     html: this.state.body,
-                    baseUrl:'http://daily.zhihu.com/'
+                    baseUrl: 'http://daily.zhihu.com/'
                 }}
                 javaScriptEnabled={true}
                 decelerationRate="normal"

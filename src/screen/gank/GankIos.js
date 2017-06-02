@@ -2,7 +2,7 @@
  * Created by zhangrui on 2017/6/1.
  */
 import React, {Component} from "react";
-import { NavigationActions} from 'react-navigation';
+import {NavigationActions} from 'react-navigation';
 import {
     Animated,
     FlatList,
@@ -18,10 +18,10 @@ const url = "http://gank.io/api/data/iOS/20/page";
 const {width, height} = Dimensions.get("window")
 class GankIos extends Component {
     static navigationOptions = {
-        drawerLabel: '豆瓣',
-        drawerIcon:({tintColor}) => (
+        drawerLabel: '干货',
+        drawerIcon: ({tintColor}) => (
             <Image
-                source={require('../../image/gank.png')} style={{width:20,height:20}}/>
+                source={require('../../image/gank.png')} style={{width: 20, height: 20}}/>
         ),
     };
 
@@ -81,6 +81,7 @@ class GankIos extends Component {
         this.state.dataArray = [];
         this.getData();
     };
+
     componentDidMount() {
         this.getData();
     }
@@ -145,6 +146,7 @@ class GankIos extends Component {
             .navigation
             .dispatch(navigateAction);
     };
+
     renderData() {
         console.log(this.state.dataArray);
         return (<AnimatedFlatList
@@ -162,10 +164,12 @@ class GankIos extends Component {
                 backgroundColor: 'white'
             }}/>);
     }
+
     renderLoadingView() {
         this.state.isLoading = true;
         this.renderData();
     }
+
     render() {
         if (this.state.isLoading && !this.state.error) {
             return this.renderData();

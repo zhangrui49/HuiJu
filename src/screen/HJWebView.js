@@ -25,7 +25,7 @@ class HJWebView extends Component {
                 startInLoadingState={true}
                 scalesPageToFit={this.state.scalesPageToFit}
                 renderError={this.renderError}
-                />
+            />
         );
     }
 

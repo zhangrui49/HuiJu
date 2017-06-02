@@ -1,10 +1,10 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import GankTab from './GankTab'
 // create a component
 class Android extends Component {
-    
+
     static navigationOptions = {
         title: 'Android', //设置标题内容
     }
@@ -12,6 +12,7 @@ class Android extends Component {
     constructor(props) {
         super(props);
     }
+
     render() {
         return (
             <View style={styles.container}>

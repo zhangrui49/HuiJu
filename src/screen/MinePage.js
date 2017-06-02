@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {
     Button,
     Image,
@@ -8,31 +8,33 @@ import {
 } from 'react-native';
 
 import {
-   DrawerNavigator
+    DrawerNavigator
 } from 'react-navigation';
 
 import MyNotificationsScreen from './Notification';
 
-class MinePage extends Component{
+class MinePage extends Component {
     static navigationOptions = {
-          title:'我的',
-         drawerLabel: '我的',
+        title: '我的',
+        drawerLabel: '我的',
         // Note: By default the icon is only shown on iOS. Search the  showIcon option below.
-         drawerIcon: ({ tintColor }) => (
-         <Image
-              source={require('../image/loading.png')}
-            style={[styles.icon, {tintColor: tintColor}]}
-         />
-      ),
-   };
-    render(){;
-        return(
-            <View style={{backgroundColor:'#fff',flex:1}}>
-                <Text style={{padding:20}}>Sybil</Text>
+        drawerIcon: ({tintColor}) => (
+            <Image
+                source={require('../image/loading.png')}
+                style={[styles.icon, {tintColor: tintColor}]}
+            />
+        ),
+    };
+
+    render() {
+        ;
+        return (
+            <View style={{backgroundColor: '#fff', flex: 1}}>
+                <Text style={{padding: 20}}>Sybil</Text>
                 <Button
-                  style={{padding:20}}
-                  onPress={() => this.props.navigation.navigate('DrawerOpen')}
-                  title="点击打开侧滑菜单"
+                    style={{padding: 20}}
+                    onPress={() => this.props.navigation.navigate('DrawerOpen')}
+                    title="点击打开侧滑菜单"
                 />
             </View>
         );
@@ -54,7 +56,7 @@ const MyChatNavigator = DrawerNavigator({
     Notifications: {
         screen: MyNotificationsScreen,
     },
-},{
+}, {
     drawerWidth: 220, // 抽屉宽
     drawerPosition: 'left', // 抽屉在左边还是右边
     // contentComponent: CustomDrawerContentComponent,  // 自定义抽屉组件

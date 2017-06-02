@@ -6,10 +6,11 @@ export default class Splash extends Component {
     static navigationOptions = {
         title: 'Splash'
     };
+
     constructor(props) {
         super(props);
         setTimeout(() => {
-           this.props.navigation('Main')
+            this.props.navigation('Main')
         }, 2000);
     }
 

@@ -9,11 +9,11 @@ import {
 
 class MyNotificationsScreen extends React.Component {
     static navigationOptions = {
-        title:'通知',
+        title: '通知',
         drawerLabel: '通知',
-        drawerIcon: ({ tintColor }) => (
+        drawerIcon: ({tintColor}) => (
             <Image
-                 source={require('../image/loading.png')}
+                source={require('../image/loading.png')}
                 style={[styles.tabIcon, {tintColor: tintColor}]}
             />
         ),
@@ -21,9 +21,9 @@ class MyNotificationsScreen extends React.Component {
 
     render() {
         return (
-             <View style={{backgroundColor:'#fff'}}>
+            <View style={{backgroundColor: '#fff'}}>
                 <Button
-                    style={{padding:20}}
+                    style={{padding: 20}}
                     onPress={() => this.props.navigation.navigate('DrawerOpen')}
                     title="点击打开侧滑菜单"
                 />

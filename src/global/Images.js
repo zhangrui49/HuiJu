@@ -1,4 +1,2 @@
-const Images={
-
-}
+const Images = {}
 export default Images;

@@ -83,6 +83,7 @@ class GankTab extends Component {
         this.state.dataArray = [];
         this.getData();
     }
+
     componentDidMount() {
         this.getData();
     }
@@ -100,10 +101,10 @@ class GankTab extends Component {
     renderSeparator = () => {
         return (<View
             style={{
-            height: 1,
-            width: width,
-            backgroundColor: "#CED0CE"
-        }}/>);
+                height: 1,
+                width: width,
+                backgroundColor: "#CED0CE"
+            }}/>);
     };
 
     renderItem({item}) {
@@ -111,20 +112,20 @@ class GankTab extends Component {
             <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
                 <View
                     style={{
-                    backgroundColor: 'white',
-                    width: width,
-                    justifyContent: 'center',
-                    marginLeft: 10,
-                    flexDirection: 'column'
-                }}>
+                        backgroundColor: 'white',
+                        width: width,
+                        justifyContent: 'center',
+                        marginLeft: 10,
+                        flexDirection: 'column'
+                    }}>
 
                     <Text
                         style={{
-                        fontSize: 16,
-                        color: 'green',
-                        justifyContent: 'center',
-                        height: 40
-                    }}>{item.value.desc}</Text>
+                            fontSize: 16,
+                            color: 'green',
+                            justifyContent: 'center',
+                            height: 40
+                        }}>{item.value.desc}</Text>
 
                 </View>
             </TouchableOpacity>
@@ -135,13 +136,14 @@ class GankTab extends Component {
         const {navigate} = this.props.navigation;
         navigate("WebView", {url: uri})
     }
+
     renderData() {
         console.log(this.state.dataArray);
         return (<AnimatedFlatList
             data={this.state.dataArray}
             renderItem={this
-            .renderItem
-            .bind(this)}
+                .renderItem
+                .bind(this)}
             onEndReached={this.onEndReached}
             refreshing={this.state.isLoading}
             onRefresh={this.onRefresh}
@@ -149,14 +151,16 @@ class GankTab extends Component {
             ItemSeparatorComponent={this.renderSeparator}
             onEndReachedThreshold={0.1}
             style={{
-            backgroundColor: 'white'
-        }}/>);
+                backgroundColor: 'white'
+            }}/>);
     }
+
     //加载等待的view
     renderLoadingView() {
         this.state.isLoading = true;
         this.renderData();
     }
+
     render() {
         if (this.state.isLoading && !this.state.error) {
             return this.renderData();

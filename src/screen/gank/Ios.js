@@ -1,6 +1,6 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import GankTab from './GankTab'
 // create a component
 class Ios extends Component {

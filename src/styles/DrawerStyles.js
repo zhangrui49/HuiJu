@@ -5,8 +5,8 @@ export default StyleSheet.create({
 
     avatar: {
         flex: 1,
-        height:50,
-        width:50,
+        height: 50,
+        width: 50,
     }
 
 });
