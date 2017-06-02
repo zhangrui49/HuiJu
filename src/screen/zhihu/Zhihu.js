@@ -12,14 +12,33 @@ import {
 } from "react-native";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const url = "http://gank.io/api/data/Android/20/page";
+const url = "http://news-at.zhihu.com/api/4/news/before/";
 const {width, height} = Dimensions.get("window")
-class GankAndroid extends Component {
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds()             //毫秒
+    };
+    if (/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};
+class Zhihu extends Component {
+
     static navigationOptions = {
-        drawerLabel: '干货',
-        drawerIcon:({tintColor}) => (
+        drawerLabel: '知乎',
+        title:'知乎日报',
+        drawerIcon: ({tintColor}) => (
             <Image
-                source={require('../../image/gank.png')} style={{width:20,height:20}}/>
+                source={require('../../image/zhihu.png')} style={{width: 20, height: 20}}/>
         ),
     };
 
@@ -28,35 +47,25 @@ class GankAndroid extends Component {
         this.state = {
             isLoading: true,
             error: false,
-            page: 1,
             errorInfo: "",
             dataArray: []
         }
     }
 
     getData() {
-
-        let tempUrl = url.replace('page', this.state.page);
-        this.state.isLoading = true;
+        let date = new Date();
+        let tempUrl = url + date.Format('yyyyMMdd');
         console.log(tempUrl);
+        this.state.isLoading = true;
         fetch(tempUrl).then((response) => response.json()).then((responseData) => {
-            let data = responseData.results;
+            let data = responseData.stories;
             let dataBlob = [];
             let i = 0;
             data.map(function (item) {
                 dataBlob.push({key: i, value: item})
                 i++;
             });
-            if (this.state.page === 1) {
-                this.setState((state) => ({dataArray: dataBlob}));
-            } else {
-                this.setState((state) => ({
-                    dataArray: [
-                        ...this.state.dataArray,
-                        ...dataBlob
-                    ]
-                }));
-            }
+            this.setState((state) => ({dataArray: dataBlob}));
             this.setState((state) => ({isLoading: false}));
             data = null;
             dataBlob = null;
@@ -67,15 +76,13 @@ class GankAndroid extends Component {
         }).done();
     }
 
-    onEndReached = () => {
-        console.log("onEndReached");
-        this.state.page = this.state.page + 1;
-        this.getData();
-    };
+    getDateFormat() {
+
+
+    }
 
     onRefresh = () => {
         console.log("onRefresh");
-        this.state.page = 1;
         this.state.dataArray = [];
         this.getData();
     };
@@ -97,7 +104,7 @@ class GankAndroid extends Component {
     renderSeparator = () => {
         return (<View
             style={{
-                height: 1,
+                height: 2,
                 width: width,
                 backgroundColor: "#CED0CE"
             }}/>);
@@ -105,28 +112,42 @@ class GankAndroid extends Component {
 
     renderItem({item}) {
         return (
-            <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
-                <Text
-                    style={{
-                        fontSize: 16,
-                        color: 'green',
-                        height: 40,
+            <TouchableOpacity onPress={() => this._navigate(item.value.id)}>
+                <View style={{flex: 1, flexDirection: 'row', marginLeft: 20}}>
+                    <Image source={{uri: item.value.images[0]}} style={{height: width * 0.2, width: width * 0.2}}/>
+                    <View style={{
+                        flex: 1,
                         marginLeft: 10,
-                        textAlign: 'center'
-                    }}>{item.value.desc}</Text>
+                        height: 60,
+                        width: width * 0.7,
+                        marginRight: 10,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <Text
+                            numberOfLines={2}
+                            style={{
+                                fontSize: 16,
+                                color: 'green',
+                                height: 60,
+                                width: width * 0.7,
+                                justifyContent: 'center',
+                            }}>{item.value.title}</Text>
+                    </View>
+                </View>
             </TouchableOpacity>
         );
     }
 
-    _navigate = (uri) => {
+    _navigate = (id) => {
 
         const navigateAction = NavigationActions.navigate({
 
-            routeName: 'WebView',
+            routeName: 'ZhihuDetail',
 
-            params: {url: uri},
+            params: {id: id},
 
-            action: NavigationActions.navigate({routeName: 'WebView'})
+            action: NavigationActions.navigate({routeName: 'ZhihuDetail'})
         });
 
         this
@@ -142,14 +163,14 @@ class GankAndroid extends Component {
             renderItem={this
                 .renderItem
                 .bind(this)}
-            onEndReached={this.onEndReached}
             refreshing={this.state.isLoading}
             onRefresh={this.onRefresh}
-            keyExtractor={item => item.value.url}
+            keyExtractor={item => item.value.id}
             ItemSeparatorComponent={this.renderSeparator}
             onEndReachedThreshold={0.1}
             style={{
-                backgroundColor: 'white'
+                backgroundColor: 'white',
+                marginTop:5
             }}/>);
     }
 
@@ -170,7 +191,7 @@ class GankAndroid extends Component {
     }
 
 }
-export default GankAndroid;
+export default Zhihu;
 
 const styles = StyleSheet.create({
     container: {

@@ -5,7 +5,7 @@ import {DrawerNavigator,StackNavigator} from 'react-navigation';
 import GankNavi from './GankNavi'
 import Aipai from '../Aipai'
 import Douban from '../Douban'
-import Zhihu from '../Zhihu'
+import Zhihu from '../zhihu/Zhihu'
 
 class Gank extends Component {
 

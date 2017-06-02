@@ -17,7 +17,7 @@ const url = "http://gank.io/api/data/福利/10/page";
 const {width, height} = Dimensions.get("window")
 class Meizi extends Component {
     static navigationOptions = {
-        drawerLabel: '豆瓣',
+        drawerLabel: '干货',
         drawerIcon:({tintColor}) => (
             <Image
                 source={require('../../image/gank.png')} style={{width:20,height:20}}/>

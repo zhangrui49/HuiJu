@@ -7,7 +7,7 @@ import {DrawerNavigator} from 'react-navigation';
 import Aipai from './Aipai'
 import Douban from './Douban'
 import Gank from './gank/Gank'
-import Zhihu from './Zhihu'
+import Zhihu from './zhihu/Zhihu'
 
 const Drawer = DrawerNavigator({
     Gank: {
