@@ -5,12 +5,14 @@ class HJWebView extends Component {
     static navigationOptions = {
         title: 'HJWebView'
     }
-    state = {
-        backButtonEnabled: false,
-        onShouldStartLoadWithRequest: false,
-        loading: true,
-        scalesPageToFit: true
-    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true,
+            error: false,
+        }
+    }
 
     render() {
         console.log(this.props.navigation.state.params.url);
@@ -21,9 +23,9 @@ class HJWebView extends Component {
                 }}
                 javaScriptEnabled={true}
                 decelerationRate="normal"
-                onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                onShouldStartLoadWithRequest={true}
                 startInLoadingState={true}
-                scalesPageToFit={this.state.scalesPageToFit}
+                scalesPageToFit={false}
                 renderError={this.renderError}
             />
         );
