@@ -66,7 +66,12 @@ const Drawer = DrawerNavigator({
         activeBackgroundColor: '#f5f5f5', // 选中背景颜色
         inactiveTintColor: '#F44336', // 未选中文字颜色
         inactiveBackgroundColor: '#fff', // 未选中背景颜色
-        style: {}
+        style: {},
+        navigationOptions: {
+        headerTintColor: '#51c4fe',
+        headerStyle: {backgroundColor: "white"},
+        headerTitleStyle: {alignSelf: 'center'},
+    },
     }
 });
 

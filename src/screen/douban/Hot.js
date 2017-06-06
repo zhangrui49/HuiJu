@@ -21,10 +21,12 @@ const {width, height} = Dimensions.get("window")
 class Hot extends Component {
     static navigationOptions = {
         drawerLabel: '豆瓣',
-        drawerIcon: ({tintColor}) => (
-            <Image
-                source={require('../../image/video.png')} style={{width: 20, height: 20}}/>
-        ),
+        drawerIcon: ({tintColor}) => (<Image
+            source={require('../../image/video.png')}
+            style={{
+            width: 20,
+            height: 20
+        }}/>)
     };
 
     constructor(props) {
@@ -99,42 +101,44 @@ class Hot extends Component {
     renderSeparator = () => {
         return (<View
             style={{
-                height: 1,
-                width: width,
-                backgroundColor: "#CED0CE"
-            }}/>);
+            height: 1,
+            width: width,
+            backgroundColor: "#CED0CE"
+        }}/>);
     };
 
     renderItem({item}) {
         let country = this.generateString(item.value.countries);
         let genres = this.generateString(item.value.genres);
         return (
-            <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
+            <TouchableOpacity onPress={() => this._navigate(item)}>
                 <View style={styles.item_container}>
                     <Image
-                        source={{uri: item.value.images['large']}}
+                        source={{
+                        uri: item.value.images['large']
+                    }}
                         style={{
-                            width: width * 0.5,
-                            height: height * 0.3
-                        }}/>
+                        width: width * 0.5,
+                        height: height * 0.3
+                    }}/>
                     <View style={styles.item_desc}>
                         <Text style={styles.title}>{item.value.title}</Text>
-                        <Text style={styles.text}>{item.value.countries ? country : item.value.countries}</Text>
+                        <Text style={styles.text}>{item.value.countries
+                                ? country
+                                : item.value.countries}</Text>
                         <Text style={styles.text}>{genres}</Text>
                         <Text style={styles.text}>{item.value.year}</Text>
                         <Text style={styles.text}>{item.value.directors[0]['name']}</Text>
                         <StarRating
                             maxStars={10}
-                            rating={item.value.rating['average']
-                            }
+                            rating={item.value.rating['average']}
                             starColor={'red'}
                             disabled={true}
                             emptyStar={'ios-star-outline'}
                             fullStar={'ios-star'}
                             halfStar={'ios-star-half'}
                             iconSet={'Ionicons'}
-                            starSize={20}
-                        />
+                            starSize={20}/>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -155,15 +159,15 @@ class Hot extends Component {
         return s;
     }
 
-    _navigate = (uri) => {
+    _navigate = (item) => {
 
         const navigateAction = NavigationActions.navigate({
-
-            routeName: 'WebView',
-
-            params: {url: uri},
-
-            action: NavigationActions.navigate({routeName: 'WebView'})
+            routeName: 'MovieDetail',
+            params: {
+                id: item.value.id,
+                title: item.value.title
+            },
+            action: NavigationActions.navigate()
         });
 
         this
@@ -177,8 +181,8 @@ class Hot extends Component {
         return (<AnimatedFlatList
             data={this.state.dataArray}
             renderItem={this
-                .renderItem
-                .bind(this)}
+            .renderItem
+            .bind(this)}
             onEndReached={this.onEndReached}
             refreshing={this.state.isLoading}
             onRefresh={this.onRefresh}
@@ -186,8 +190,8 @@ class Hot extends Component {
             ItemSeparatorComponent={this.renderSeparator}
             onEndReachedThreshold={0.2}
             style={{
-                backgroundColor: 'white'
-            }}/>);
+            backgroundColor: 'white'
+        }}/>);
     }
 
     renderLoadingView() {
@@ -214,7 +218,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ffffff',
-        flexDirection: 'row',
+        flexDirection: 'row'
     },
     item_desc: {
         flex: 1,
@@ -224,12 +228,12 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#aa2200',
-        fontSize: 18,
+        fontSize: 18
     },
     text: {
         color: '#aa2200',
         fontSize: 14,
-        height:30
+        height: 30
     }
 
 });

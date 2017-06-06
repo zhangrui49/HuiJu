@@ -113,11 +113,11 @@ class Zhihu extends Component {
     renderItem({item}) {
         return (
             <TouchableOpacity onPress={() => this._navigate(item.value.id)}>
-                <View style={{flex: 1, flexDirection: 'row', marginLeft: 20}}>
+                <View style={{flex: 1, flexDirection: 'row', marginLeft: 5}}>
                     <Image source={{uri: item.value.images[0]}} style={{height: width * 0.2, width: width * 0.2}}/>
                     <View style={{
                         flex: 1,
-                        marginLeft: 10,
+                        marginLeft: 5,
                         height: 60,
                         width: width * 0.7,
                         marginRight: 10,

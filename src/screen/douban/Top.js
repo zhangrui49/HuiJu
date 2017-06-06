@@ -109,7 +109,7 @@ class Top extends Component {
         let country = this.generateString(item.value.countries);
         let genres = this.generateString(item.value.genres);
         return (
-            <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
+            <TouchableOpacity onPress={() => this._navigate(item)}>
                 <View style={styles.item_container}>
                     <Image
                         source={{uri: item.value.images['large']}}
@@ -155,15 +155,18 @@ class Top extends Component {
         return s;
     }
 
-    _navigate = (uri) => {
+    _navigate = (item) => {
 
         const navigateAction = NavigationActions.navigate({
 
-            routeName: 'WebView',
+            routeName: 'MovieDetail',
 
-            params: {url: uri},
+            params: {
+                id: item.value.id,
+                title: item.value.title
+            },
 
-            action: NavigationActions.navigate({routeName: 'WebView'})
+            action: NavigationActions.navigate({routeName: 'MovieDetail'})
         });
 
         this
