@@ -1,27 +1,14 @@
-import React, {Component} from "react";
-import {NavigationActions} from 'react-navigation';
-import {
-    Animated,
-    FlatList,
-    StyleSheet,
-    Text,
-    View,
-    Dimensions,
-    Image,
-    TouchableOpacity
-} from "react-native";
+/**
+ * Created by zhangrui on 2017/6/6.
+ */
 
+import React, {Component} from "react";
+import {Text, View,Animated,FlatList} from "react-native";
+import {NavigationActions} from "react-navigation";
+import MeiPaiItem from "./MeiPaiItem";
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const url = "http://gank.io/api/data/Android/20/page";
-const {width, height} = Dimensions.get("window")
-class GankAndroid extends Component {
-    static navigationOptions = {
-        drawerLabel: '干货',
-        drawerIcon: ({tintColor}) => (
-            <Image
-                source={require('../../image/gank.png')} style={{width: 20, height: 20}}/>
-        ),
-    };
+const url = "http://newapi.meipai.com/output/channels_topics_timeline.json?id=type&&";
+export default class MeipaiPage extends Component {
 
     constructor(props) {
         super(props);
@@ -30,16 +17,15 @@ class GankAndroid extends Component {
             error: false,
             page: 1,
             errorInfo: "",
-            dataArray: []
+            dataArray: [],
         }
     }
 
     getData() {
-        let tempUrl = url.replace('page', this.state.page);
+        let tempUrl = url.replace('type',this.props.type) + "page=" + this.state.page + "&&count=10";
         this.state.isLoading = true;
-        console.log(tempUrl);
         fetch(tempUrl).then((response) => response.json()).then((responseData) => {
-            let data = responseData.results;
+            let data = responseData;
             let dataBlob = [];
             let i = 0;
             data.map(function (item) {
@@ -68,7 +54,7 @@ class GankAndroid extends Component {
 
     onEndReached = () => {
         console.log("onEndReached");
-        this.state.page = this.state.page + 1;
+        this.state.page = this.state.page + 10;
         this.getData();
     };
 
@@ -96,36 +82,22 @@ class GankAndroid extends Component {
     renderSeparator = () => {
         return (<View
             style={{
-                height: 1,
-                width: width,
-                backgroundColor: "#CED0CE"
+                height: 2,
+                backgroundColor: "#ff77ff"
             }}/>);
     };
 
-    renderItem({item}) {
-        return (
-            <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
-                <Text
-                    style={{
-                        fontSize: 16,
-                        color: 'green',
-                        height: 40,
-                        marginLeft: 10,
-                        textAlign: 'center'
-                    }}>{item.value.desc}</Text>
-            </TouchableOpacity>
-        );
-    }
-
-    _navigate = (uri) => {
+    _navigate = (item) => {
 
         const navigateAction = NavigationActions.navigate({
 
             routeName: 'WebView',
 
-            params: {url: uri},
+            params: {
+                url: item.value.url
+            },
 
-            action: NavigationActions.navigate({routeName: 'WebView'})
+            action: NavigationActions.navigate()
         });
 
         this
@@ -138,20 +110,23 @@ class GankAndroid extends Component {
         console.log(this.state.dataArray);
         return (<AnimatedFlatList
             data={this.state.dataArray}
-            renderItem={this
-                .renderItem
-                .bind(this)}
+            renderItem={this.renderItem.bind(this)}
             onEndReached={this.onEndReached}
             refreshing={this.state.isLoading}
             onRefresh={this.onRefresh}
-            keyExtractor={item => item.value.url}
+            keyExtractor={item => item.value.id}
             ItemSeparatorComponent={this.renderSeparator}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={0.2}
             style={{
                 backgroundColor: 'white'
             }}/>);
     }
 
+    renderItem({item}) {
+        return (
+            <MeiPaiItem  item={item} onPress={()=>this._navigate(item)}/>
+        );
+    }
     renderLoadingView() {
         this.state.isLoading = true;
         this.renderData();
@@ -169,23 +144,3 @@ class GankAndroid extends Component {
     }
 
 }
-export default GankAndroid;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    title: {
-        fontSize: 15,
-        color: 'blue'
-    },
-    content: {
-        fontSize: 15,
-        color: 'black'
-    }
-
-});

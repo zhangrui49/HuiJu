@@ -3,7 +3,7 @@ import {View, Image, StyleSheet, WebView} from 'react-native';
 
 class HJWebView extends Component {
     static navigationOptions = {
-        title: 'HJWebView'
+        title: '汇聚'
     }
 
     constructor(props) {

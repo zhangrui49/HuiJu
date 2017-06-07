@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {Button, Image, View, Text, StyleSheet} from 'react-native';
 import {DrawerNavigator, StackNavigator} from 'react-navigation';
 import GankNavi from './GankNavi'
-import Aipai from '../Aipai'
+import Aipai from '../meipai/MeiPai'
 import Douban from '../douban/Douban'
 import Zhihu from '../zhihu/Zhihu'
 

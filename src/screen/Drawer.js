@@ -1,15 +1,23 @@
-import React, {Component} from "react";
+import React from "react";
 
-import {Button, Image, View, Text, StyleSheet, ScrollView} from 'react-native';
+import {Image, ScrollView, Text, View} from "react-native";
 
-import {DrawerItems, DrawerNavigator} from 'react-navigation';
+import {DrawerItems, DrawerNavigator} from "react-navigation";
 
-import Aipai from './Aipai'
-import Douban from './douban/Douban'
-import Gank from './gank/GankNavi'
-import Zhihu from './zhihu/Zhihu'
+import MeiPai from "./meipai/MeiPai";
+import Douban from "./douban/Douban";
+import Gank from "./gank/GankNavi";
+import Zhihu from "./zhihu/Zhihu";
 
 const Drawer = DrawerNavigator({
+    MeiPai: {
+        screen: MeiPai,
+        navigationOptions: {
+            title: "美拍",
+            titleColor: 'green',
+            color: 'green'
+        }
+    },
     Zhihu: {
         screen: Zhihu,
         navigationOptions: {
@@ -20,14 +28,6 @@ const Drawer = DrawerNavigator({
         screen: Gank,
         navigationOptions: {
             title: "干货"
-        }
-    },
-    Aipai: {
-        screen: Aipai,
-        navigationOptions: {
-            title: "爱拍",
-            titleColor:'green',
-            color:'green'
         }
     },
     Douban: {
@@ -61,17 +61,17 @@ const Drawer = DrawerNavigator({
         </ScrollView>
     ),
     contentOptions: {
-        initialRouteName: 'Douban', // 默认页面组件
+        initialRouteName: 'MeiPai', // 默认页面组件
         activeTintColor: '#F44336', // 选中文字颜色
         activeBackgroundColor: '#f5f5f5', // 选中背景颜色
         inactiveTintColor: '#F44336', // 未选中文字颜色
         inactiveBackgroundColor: '#fff', // 未选中背景颜色
         style: {},
         navigationOptions: {
-        headerTintColor: '#51c4fe',
-        headerStyle: {backgroundColor: "white"},
-        headerTitleStyle: {alignSelf: 'center'},
-    },
+            headerTintColor: '#51c4fe',
+            headerStyle: {backgroundColor: "white"},
+            headerTitleStyle: {alignSelf: 'center'},
+        },
     }
 });
 
