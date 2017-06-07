@@ -113,26 +113,12 @@ class Zhihu extends Component {
     renderItem({item}) {
         return (
             <TouchableOpacity onPress={() => this._navigate(item.value.id)}>
-                <View style={{flex: 1, flexDirection: 'row', marginLeft: 5}}>
-                    <Image source={{uri: item.value.images[0]}} style={{height: width * 0.2, width: width * 0.2}}/>
-                    <View style={{
-                        flex: 1,
-                        marginLeft: 5,
-                        height: 60,
-                        width: width * 0.7,
-                        marginRight: 10,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
+                <View style={styles.container}>
+                    <Image source={{uri: item.value.images[0]}} style={styles.image}/>
+                    <View style={styles.title}>
                         <Text
                             numberOfLines={2}
-                            style={{
-                                fontSize: 16,
-                                color: 'green',
-                                height: 60,
-                                width: width * 0.7,
-                                justifyContent: 'center',
-                            }}>{item.value.title}</Text>
+                            style={styles.content}>{item.value.title}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -195,19 +181,22 @@ export default Zhihu;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
+        flex: 1, flexDirection: 'row', marginLeft: 5
     },
     title: {
-        fontSize: 15,
-        color: 'blue'
+        flex: 1,
+        marginLeft: 5,
+        height: 60,
+        width: width * 0.7,
+        marginRight: 10,
+        justifyContent: 'center',
     },
     content: {
-        fontSize: 15,
-        color: 'black'
+        fontSize: 16,
+        color: 'green',
+        alignItems:'center'
+    },
+    image: {
+        height: width * 0.2, width: width * 0.2
     }
-
 });

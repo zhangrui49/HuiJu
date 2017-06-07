@@ -171,22 +171,3 @@ class Meizi extends Component {
 
 }
 export default Meizi;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    title: {
-        fontSize: 15,
-        color: 'blue'
-    },
-    content: {
-        fontSize: 15,
-        color: 'black'
-    }
-
-});

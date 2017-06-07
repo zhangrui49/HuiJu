@@ -95,24 +95,14 @@ class GankAndroid extends Component {
 
     renderSeparator = () => {
         return (<View
-            style={{
-                height: 1,
-                width: width,
-                backgroundColor: "#CED0CE"
-            }}/>);
+            style={styles.separator}/>);
     };
 
     renderItem({item}) {
         return (
             <TouchableOpacity onPress={() => this._navigate(item.value.url)}>
                 <Text
-                    style={{
-                        fontSize: 16,
-                        color: 'green',
-                        height: 40,
-                        marginLeft: 10,
-                        textAlign: 'center'
-                    }}>{item.value.desc}</Text>
+                    style={styles.content}>{item.value.desc}</Text>
             </TouchableOpacity>
         );
     }
@@ -172,20 +162,18 @@ class GankAndroid extends Component {
 export default GankAndroid;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    title: {
-        fontSize: 15,
-        color: 'blue'
+
+    separator: {
+        height: 1,
+        width: width,
+        backgroundColor: "#CED0CE"
     },
     content: {
-        fontSize: 15,
-        color: 'black'
+        fontSize: 16,
+        color: 'green',
+        height: 40,
+        marginLeft: 10,
+        textAlign: 'center'
     }
 
 });
