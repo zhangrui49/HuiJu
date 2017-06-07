@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     },
     content: {
         fontSize: 16,
-        color: 'green',
+        color: '#aa2200',
         height: 40,
         marginLeft: 10,
         textAlign: 'center'

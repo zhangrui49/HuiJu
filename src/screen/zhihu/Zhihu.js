@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     },
     content: {
         fontSize: 16,
-        color: 'green',
+        color: '#aa2200',
         alignItems:'center'
     },
     image: {
